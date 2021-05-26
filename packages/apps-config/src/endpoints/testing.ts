@@ -267,7 +267,9 @@ export function createTesting (t: TFunction, firstOnly?: boolean): LinkOption[] 
       text: t('rpc.test.nftmart', 'NFTMart', { ns: 'apps-config' }),
       providers: {
         NFTMartDev: 'wss://dev-ws.nftmart.io',
-        NFTMartStaging: 'wss://staging-ws.nftmart.io'
+        NFTMartStaging: 'wss://staging-ws.nftmart.io',
+        NFTMartLocal: 'ws://192.168.0.2:9944',
+        NFTMartDev2: 'ws://81.70.132.13:9944',
       }
     },
     {
