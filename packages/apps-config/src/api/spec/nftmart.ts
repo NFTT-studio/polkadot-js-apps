@@ -12,40 +12,43 @@ const definitions: OverrideBundleDefinition = {
     {
       // on all versions
       minmax: [0, undefined],
-      types: {
+
+      types : {
         Properties: 'u8',
         NFTMetadata: 'Vec<u8>',
         BlockNumber: 'u32',
         BlockNumberOf: 'BlockNumber',
-
-        OrderData: {
-          currencyId: 'Compact<CurrencyIdOf>',
-          price: 'Compact<Balance>',
-          deposit: 'Compact<Balance>',
-          deadline: 'Compact<BlockNumberOf>',
-          categoryId: 'Compact<CategoryIdOf>'
-        },
-
-        CategoryId: 'u32',
-        CategoryIdOf: 'CategoryId',
-        CategoryData: {
-          metadata: 'NFTMetadata',
-          nftCount: 'Compact<Balance>'
-        },
-
+        BlockNumberFor: 'BlockNumber',
+        GlobalId: 'u64',
         CurrencyId: 'u32',
         CurrencyIdOf: 'CurrencyId',
         Amount: 'i128',
         AmountOf: 'Amount',
-
+        CategoryId: 'u32',
+        CategoryIdOf: 'CategoryId',
         ClassId: 'u32',
         ClassIdOf: 'ClassId',
+        TokenId: 'u64',
+        TokenIdOf: 'TokenId',
+    
+        OrmlAccountData: {
+          free: 'Balance',
+          reserved: 'Balance',
+          frozen: 'Balance',
+        },
+        
+        OrmlBalanceLock: {
+          amount: 'Balance',
+          id: 'LockIdentifier'
+        },
+        
         ClassInfoOf: {
           metadata: 'NFTMetadata',
-          totalIssuance: 'TokenId',
+          totalIssuance: 'Compact<TokenId>',
           owner: 'AccountId',
           data: 'ClassData'
         },
+    
         ClassData: {
           deposit: 'Compact<Balance>',
           properties: 'Properties',
@@ -53,15 +56,88 @@ const definitions: OverrideBundleDefinition = {
           description: 'Vec<u8>',
           createBlock: 'Compact<BlockNumberOf>'
         },
-
-        TokenId: 'u64',
-        TokenIdOf: 'TokenId',
-        TokenInfoOf: { metadata: 'NFTMetadata', owner: 'AccountId', data: 'TokenData' },
+    
+        TokenInfoOf: {
+          metadata: 'NFTMetadata',
+          data: 'TokenData',
+          quantity: 'Compact<TokenId>',
+        },
+    
         TokenData: {
           deposit: 'Compact<Balance>',
-          createBlock: 'Compact<BlockNumberOf>'
-        }
+          createBlock: 'Compact<BlockNumberOf>',
+          royalty: 'bool',
+          creator: 'AccountId',
+          royalty_beneficiary: 'AccountId',
+        },
+
+        AccountToken: {
+          quantity: 'Compact<TokenId>',
+          reserved: 'Compact<TokenId>',
+        },
+    
+        CategoryData: {
+          metadata: 'NFTMetadata',
+          nftCount: 'Compact<Balance>'
+        },
+    
+        OrderItem: {
+          classId: 'Compact<ClassId>',
+          tokenId: 'Compact<TokenId>',
+          quantity: 'Compact<TokenId>',
+        },
+    
+        OrderOf: {
+          currencyId: 'Compact<CurrencyId>',
+          deposit: 'Compact<Balance>',
+          price: 'Compact<Balance>',
+          deadline: 'Compact<BlockNumberOf>',
+          categoryId: 'Compact<CategoryId>',
+          items: 'Vec<OrderItem>',
+        },
+    
+        OfferOf: {
+          currencyId: 'Compact<CurrencyId>',
+          price: 'Compact<Balance>',
+          deadline: 'Compact<BlockNumberOf>',
+          categoryId: 'Compact<CategoryId>',
+          items: 'Vec<OrderItem>',
+        },
+
+        BritishAuctionOf: {
+          currencyId: 'Compact<CurrencyId>',
+          hammerPrice: 'Compact<Balance>',
+          minRaise: 'Compact<PerU16>',
+          deposit: 'Compact<Balance>',
+          initPrice: 'Compact<Balance>',
+          deadline: 'Compact<BlockNumberOf>',
+          allowDelay: 'bool',
+          categoryId: 'Compact<CategoryId>',
+          items: 'Vec<OrderItem>',
+        },
+    
+        BritishAuctionBidOf: {
+          lastBidPrice: 'Compact<Balance>',
+          lastBidAccount: 'Option<AccountId>',
+          lastBidBlock: 'Compact<BlockNumberOf>',
+        },
+    
+        DutchAuctionOf: {
+          currencyId: 'Compact<CurrencyId>',
+          categoryId: 'Compact<CategoryId>',
+          deposit: 'Compact<Balance>',
+          minPrice: 'Compact<Balance>',
+          maxPrice: 'Compact<Balance>',
+          deadline: 'Compact<BlockNumberOf>',
+          createdBlock: 'Compact<BlockNumberOf>',
+          items: 'Vec<OrderItem>',
+          allowBritishAuction: 'bool',
+          minRaise: 'Compact<PerU16>',
+        },
+    
+        DutchAuctionBidOf: 'BritishAuctionBidOf',
       }
+
     }
   ]
 };
